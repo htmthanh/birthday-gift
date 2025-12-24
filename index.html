@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>Chúc mừng sinh nhật anh yêu 🎂</title>
+  <title>Happy Birthday ✨</title>
   <style>
     * {
       margin: 0;
@@ -12,146 +12,130 @@
     }
 
     body {
+      background: radial-gradient(circle at top, #050b1f, #000000 70%);
       height: 100vh;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       overflow: hidden;
-      position: relative;
       cursor: pointer;
     }
 
-    .center-text {
-      position: absolute;
-      top: 38%;
-      width: 100%;
-      text-align: center;
-      color: white;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-      z-index: 10;
-      padding: 0 20px;
-    }
-
-    .center-text h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-    }
-
-    .center-text p {
-      font-size: 1.4em;
-      line-height: 1.6;
-    }
-
-    .hint {
-      margin-top: 15px;
-      font-size: 1em;
-      opacity: 0.9;
-    }
-
+    /* ✨ GALAXY TEXT */
     .fall {
       position: absolute;
       top: -100px;
-      animation: fall linear infinite;
       pointer-events: none;
+      animation: fall linear forwards;
     }
 
     .text {
-      color: white;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 600;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
       white-space: nowrap;
+      background: linear-gradient(
+        90deg,
+        #6dd5ff,
+        #2193ff,
+        #00eaff,
+        #6dd5ff
+      );
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: galaxy 4s ease infinite;
+      text-shadow:
+        0 0 8px rgba(0, 180, 255, 0.6),
+        0 0 16px rgba(0, 120, 255, 0.4);
     }
 
-    .image {
-      width: 60px;
-      height: 60px;
-      border-radius: 12px;
-      object-fit: cover;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    @keyframes galaxy {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     @keyframes fall {
       from {
         transform: translateY(-100px);
-        opacity: 1;
+        opacity: 0;
       }
       to {
         transform: translateY(110vh);
-        opacity: 0.8;
+        opacity: 1;
       }
+    }
+
+    /* ⭐ STAR BACKGROUND */
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      opacity: 0.8;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-  <div class="center-text">
-    <h1>🎉 Chúc mừng sinh nhật anh yêu 🎂</h1>
-    <p>
-      Chúc anh tuổi mới thật nhiều niềm vui 💖  
-      Luôn mạnh khỏe, hạnh phúc  
-      Và mãi ở bên em nhé 🥰
-    </p>
-    <div class="hint">💝 Chạm vào màn hình để bật nhạc</div>
-  </div>
-
-  <!-- 🎵 NHẠC -->
+  <!-- 🎵 MUSIC -->
   <audio id="music" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
+    /* 🌌 TEXT CONTENT */
     const messages = [
-      "🎂 Happy Birthday!",
-      "💖 Em yêu anh",
-      "🎉 Tuổi mới thật nhiều niềm vui",
-      "🥰 Luôn bên nhau nhé",
-      "💝 Anh là cả thế giới của em",
-      "✨ Yêu anh rất nhiều"
+      "HAPPY BIRTHDAY",
+      "TO MY BRO ❤️",
+      "BEST VERSION OF YOU",
+      "KEEP SHINING ✨",
+      "STRONGER EVERY YEAR",
+      "YOU ARE LEGENDARY",
+      "STAY WILD – STAY REAL"
     ];
 
-    const images = [
-      "https://i.imgur.com/0XKzn9K.png",
-      "https://i.imgur.com/Z6X8KXU.png",
-      "https://i.imgur.com/fHyEMsl.png"
-    ];
+    /* ✨ FALLING TEXT */
+    function createText() {
+      const el = document.createElement("div");
+      el.className = "fall";
 
-    function createFallingItem() {
-      const item = document.createElement("div");
-      item.classList.add("fall");
+      const text = document.createElement("div");
+      text.className = "text";
+      text.innerText = messages[Math.floor(Math.random() * messages.length)];
 
-      const isImage = Math.random() < 0.4;
+      const duration = Math.random() * 6 + 6;
+      const size = Math.random() * 0.6 + 0.8;
 
-      if (isImage) {
-        const img = document.createElement("img");
-        img.src = images[Math.floor(Math.random() * images.length)];
-        img.classList.add("image");
-        item.appendChild(img);
-      } else {
-        const text = document.createElement("div");
-        text.classList.add("text");
-        text.innerText = messages[Math.floor(Math.random() * messages.length)];
-        item.appendChild(text);
-      }
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = duration + "s";
+      el.style.transform = `scale(${size})`;
 
-      const size = Math.random() * 0.8 + 0.8;
-      const duration = Math.random() * 5 + 5;
+      el.appendChild(text);
+      document.body.appendChild(el);
 
-      item.style.left = Math.random() * 100 + "vw";
-      item.style.animationDuration = duration + "s";
-      item.style.transform = `scale(${size})`;
-
-      document.body.appendChild(item);
-
-      setTimeout(() => item.remove(), duration * 1000);
+      setTimeout(() => el.remove(), duration * 1000);
     }
 
-    setInterval(createFallingItem, 500);
+    setInterval(createText, 450);
 
-    // 🎵 Click để bật nhạc
+    /* ⭐ STARS */
+    for (let i = 0; i < 120; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.style.left = Math.random() * 100 + "vw";
+      star.style.top = Math.random() * 100 + "vh";
+      star.style.animationDelay = Math.random() * 3 + "s";
+      document.body.appendChild(star);
+    }
+
+    /* 🎵 CLICK TO PLAY */
     const music = document.getElementById("music");
     document.body.addEventListener("click", () => {
       music.play();
-      document.querySelector(".hint").style.display = "none";
     }, { once: true });
   </script>
 
