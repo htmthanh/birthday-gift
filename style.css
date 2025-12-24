@@ -165,3 +165,20 @@ body::before {
   font-size: 14px;
   opacity: .8;
 }
+
+/* ===== STARS ===== */
+.star {
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 3s infinite ease-in-out;
+  z-index: -1;
+}
+
+@keyframes twinkle {
+  0%,100% { opacity: .3; }
+  50% { opacity: 1; }
+}

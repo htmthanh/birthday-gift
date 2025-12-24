@@ -98,3 +98,15 @@ document.body.addEventListener("click", () => {
   music.play();
   if (hint) hint.style.display = "none";
 }, { once: true });
+
+/* ===== STARS ===== */
+const STAR_COUNT = window.innerWidth < 600 ? 80 : 140;
+
+for (let i = 0; i < STAR_COUNT; i++) {
+  const star = document.createElement("div");
+  star.className = "star";
+  star.style.left = Math.random() * 100 + "vw";
+  star.style.top = Math.random() * 100 + "vh";
+  star.style.animationDelay = Math.random() * 3 + "s";
+  document.body.appendChild(star);
+}
