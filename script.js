@@ -1,4 +1,3 @@
-/* ===== TEXT ===== */
 const birthdayText = "HAPPY BIRTHDAY ANH IUUUU 🎂💙";
 
 const messages = [
@@ -19,27 +18,57 @@ const messages = [
 const specialMessage = "YOU ARE MY FOREVER 💙";
 let specialShown = false;
 
-function createTunnelText() {
+const stickers = ["💙","✨","🌙","⭐","🪐","💫"];
+
+const images = [
+  "img/img1.jpg",
+  "img/img2.jpg",
+  "img/img3.jpg",
+  "img/img4.jpg",
+  "img/img5.jpg",
+  "img/img6.jpg"
+];
+
+function createFallingItem() {
   const el = document.createElement("div");
   el.className = "fall";
 
   const depth = Math.random(); // 0 xa – 1 gần
-  const scale = 0.6 + depth * 1.2;
-  const duration = 6 + (1 - depth) * 9;
+  const scale = 0.6 + depth * 1.1;
+  const duration = 7 + (1 - depth) * 8;
 
-  const t = document.createElement("div");
-  t.className = "text";
-  t.innerText = messages[Math.floor(Math.random() * messages.length)];
+  const type = Math.random();
 
+  if (type < 0.45) {
+    // TEXT
+    const t = document.createElement("div");
+    t.className = "text";
+    t.innerText = messages[Math.floor(Math.random() * messages.length)];
+    el.appendChild(t);
+
+  } else if (type < 0.65) {
+    // STICKER
+    const s = document.createElement("div");
+    s.className = "sticker";
+    s.innerText = stickers[Math.floor(Math.random() * stickers.length)];
+    el.appendChild(s);
+
+  } else {
+    // IMAGE
+    const img = document.createElement("img");
+    img.className = "image";
+    img.src = images[Math.floor(Math.random() * images.length)];
+    el.appendChild(img);
+  }
+
+  el.style.left = Math.random() * 90 + "vw";
   el.style.animationDuration = duration + "s";
   el.style.transform += `
     scale(${scale})
     translateZ(${depth * 300}px)
   `;
 
-  el.appendChild(t);
   document.body.appendChild(el);
-
   setTimeout(() => el.remove(), duration * 1000);
 }
 
@@ -54,33 +83,23 @@ function spawnSpecial() {
   t.className = "text special";
   t.innerText = specialMessage;
 
-  el.style.animationDuration = "18s";
-  el.style.transform += " scale(1.3) translateZ(350px)";
+  el.style.left = "50vw";
+  el.style.animationDuration = "20s";
+  el.style.transform += "scale(1.3) translateZ(350px)";
 
   el.appendChild(t);
   document.body.appendChild(el);
-
-  setTimeout(() => el.remove(), 18000);
 }
 
 function createMeteor() {
   const m = document.createElement("div");
   m.className = "meteor";
   document.body.appendChild(m);
-  setTimeout(() => m.remove(), 1500);
+  setTimeout(() => m.remove(), 1600);
 }
 
-for (let i = 0; i < 160; i++) {
-  const star = document.createElement("div");
-  star.className = "star";
-  star.style.left = Math.random() * 100 + "vw";
-  star.style.top = Math.random() * 100 + "vh";
-  star.style.animationDelay = Math.random() * 3 + "s";
-  document.body.appendChild(star);
-}
-
-setInterval(createTunnelText, 300);
-setInterval(createMeteor, 5500);
+setInterval(createFallingItem, 320);
+setInterval(createMeteor, 6000);
 setTimeout(spawnSpecial, 45000);
 
 const music = document.getElementById("music");
