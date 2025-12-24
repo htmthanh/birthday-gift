@@ -9,140 +9,107 @@ body {
   height: 100vh;
   overflow: hidden;
   background: radial-gradient(circle at left, #050b1f, #000 75%);
-  perspective: 1000px;
-  touch-action: manipulation;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: -15%;
-  background: radial-gradient(circle at left, #050b1f, #000 75%);
-  z-index: -2;
-  animation: cameraPan 30s ease-in-out infinite alternate;
-}
-
-@keyframes cameraPan {
-  from { transform: translateX(-14px); }
-  to   { transform: translateX(14px); }
 }
 
 /* ===== QUESTION ===== */
-#question {
+#question-screen {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle, #050b1f, #000);
+  background: radial-gradient(circle, #06102c, #000);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 999;
+  justify-content: center;
+  z-index: 10;
 }
 
-.card {
+.question-box {
   text-align: center;
-  padding: 28px;
-  background: rgba(255,255,255,.04);
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 40px rgba(0,180,255,.25);
+  color: #fff;
 }
 
-.card h1 {
-  color: #bfe9ff;
+.question-box h1 {
+  font-size: clamp(26px, 6vw, 40px);
   margin-bottom: 20px;
 }
 
-.actions {
+.buttons {
   display: flex;
-  gap: 18px;
+  gap: 16px;
   justify-content: center;
 }
 
 button {
-  padding: 12px 22px;
+  padding: 12px 26px;
   font-size: 16px;
-  border-radius: 30px;
+  border-radius: 999px;
   border: none;
   cursor: pointer;
+}
+
+#yesBtn {
+  background: #7dd3ff;
   color: #000;
-  background: linear-gradient(90deg,#7dd3ff,#fff);
+}
+
+#noBtn {
+  background: #333;
+  color: #fff;
 }
 
 #no-text {
-  margin-top: 16px;
+  margin-top: 14px;
+  font-size: 14px;
   color: #7dd3ff;
   opacity: 0;
   transition: opacity .4s;
 }
 
+/* ===== FALL ===== */
 .fall {
-  position: fixed;
-  top: -120px;
+  position: absolute;
+  top: -140px;
   pointer-events: none;
-  will-change: transform;
-  transform-style: preserve-3d;
-  transform:
-    rotateY(-28deg)
-    rotateX(16deg)
-    rotateZ(-8deg);
-  animation: fall linear forwards;
+  animation: fallDown linear forwards;
 }
 
-@keyframes fall {
-  from { transform: translate3d(0,-120px,0) rotateY(-28deg) rotateX(16deg) rotateZ(-8deg); opacity: 0; }
-  to   { transform: translate3d(0,120vh,0) rotateY(-28deg) rotateX(16deg) rotateZ(-8deg); opacity: 1; }
+@keyframes fallDown {
+  from { top: -140px; opacity: 0; }
+  to   { top: 120vh; opacity: 1; }
 }
 
+/* ===== TEXT ===== */
 .text {
-  font-size: clamp(18px, 4vw, 32px);
+  font-size: clamp(16px, 4vw, 30px);
   font-weight: 700;
   white-space: nowrap;
-  background: linear-gradient(90deg,#fff,#7dd3ff,#fff);
+
+  background: linear-gradient(90deg, #fff, #7dd3ff, #fff);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: glow 5s ease infinite;
-  text-shadow: 0 0 20px rgba(120,220,255,.6);
+  animation: glowMove 5s ease infinite;
 }
 
-@keyframes glow {
+@keyframes glowMove {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
+/* ===== IMAGE ===== */
 .image {
-  width: clamp(110px, 28vw, 180px);
-  height: clamp(110px, 28vw, 180px);
-  border-radius: 22px;
+  width: clamp(90px, 22vw, 140px);
+  height: clamp(90px, 22vw, 140px);
+  border-radius: 18px;
   object-fit: cover;
-  box-shadow: 0 0 30px rgba(0,180,255,.5);
 }
 
+/* ===== STICKER ===== */
 .sticker {
-  font-size: clamp(26px, 6vw, 38px);
-  filter: drop-shadow(0 0 14px rgba(0,180,255,.8));
-  animation: pulse 1.6s infinite;
+  font-size: clamp(22px, 6vw, 32px);
 }
 
-@keyframes pulse {
-  50% { transform: scale(1.3); }
-}
-
-.meteor {
-  position: fixed;
-  width: 2px;
-  height: 120px;
-  background: linear-gradient(to bottom,transparent,#7dd3ff);
-  filter: drop-shadow(0 0 12px rgba(120,220,255,.8));
-  animation: meteor 1.4s linear forwards;
-}
-
-@keyframes meteor {
-  from { transform: translate(-20vw,-30vh); opacity: 1; }
-  to   { transform: translate(20vw,120vh); opacity: 0; }
-}
-
+/* ===== STARS ===== */
 .star {
   position: fixed;
   width: 2px;
@@ -150,20 +117,11 @@ button {
   background: white;
   border-radius: 50%;
   opacity: .7;
-  animation: twinkle 3s infinite;
+  animation: twinkle 3s infinite ease-in-out;
   z-index: -1;
 }
 
 @keyframes twinkle {
+  0%,100% { opacity: .3; }
   50% { opacity: 1; }
-}
-
-#music-hint {
-  position: fixed;
-  bottom: 16px;
-  width: 100%;
-  text-align: center;
-  color: #7dd3ff;
-  font-size: 13px;
-  opacity: .7;
 }

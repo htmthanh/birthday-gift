@@ -6,24 +6,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <audio id="music" loop playsinline>
-    <source src="music/music.mp3" type="audio/mpeg">
-  </audio>
-
-  <div id="question">
-    <div class="card">
-      <h1>Anh cóa yêu em hokkkk? 💙</h1>
-      <div class="actions">
-        <button id="yes">Có 💙</button>
-        <button id="no">Không</button>
+  <!-- ===== QUESTION SCREEN ===== -->
+  <div id="question-screen">
+    <div class="question-box">
+      <h1>Yêu em không? 💙</h1>
+      <div class="buttons">
+        <button id="yesBtn">Có 💕</button>
+        <button id="noBtn">Không 😶</button>
       </div>
-      <p id="no-text">Anh không có sự lựa chọn này 😌</p>
+      <div id="no-text">Anh không có sự lựa chọn này 😌</div>
     </div>
   </div>
 
-  <div id="music-hint">Tap anywhere to feel the love 🎧</div>
+  <!-- ===== MUSIC ===== -->
+  <audio id="music" loop>
+    <source src="music/music.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="script.js"></script>
 </body>
