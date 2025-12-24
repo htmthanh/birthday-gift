@@ -1,17 +1,13 @@
 const birthdayText = "HAPPY BIRTHDAY ANH IUUUU 🎂💙";
 
 const messages = [
-  birthdayText,
-  birthdayText,
-  birthdayText,
+  birthdayText, birthdayText, birthdayText,
   "YOU ARE BRILLIANT ✨",
   "BELIEVE IN YOURSELF 💫",
-  "MY HEART IS ALWAYS YOURS 💫",
+  "MY HEART IS ALWAYS YOURS 💙",
   "LOVE YOU TO THE MOON AND BACK 🌙",
-  "WITH YOU, EVERYTHING FEELS RIGHT",
   "YOU MAKE MY WORLD BRIGHTER ⭐",
   "FOREVER STARTS WITH YOU 💍",
-  "MY SAFE PLACE, MY LOVE 💙",
   "I'M SO PROUD OF YOU 🔥"
 ];
 
@@ -34,27 +30,22 @@ function createFallingItem() {
   el.className = "fall";
 
   const depth = Math.random(); // 0 xa – 1 gần
-  const scale = 0.6 + depth * 1.1;
+  const scale = 0.7 + depth * 0.9;
   const duration = 7 + (1 - depth) * 8;
 
   const type = Math.random();
 
   if (type < 0.45) {
-    // TEXT
     const t = document.createElement("div");
     t.className = "text";
     t.innerText = messages[Math.floor(Math.random() * messages.length)];
     el.appendChild(t);
-
   } else if (type < 0.65) {
-    // STICKER
     const s = document.createElement("div");
     s.className = "sticker";
     s.innerText = stickers[Math.floor(Math.random() * stickers.length)];
     el.appendChild(s);
-
   } else {
-    // IMAGE
     const img = document.createElement("img");
     img.className = "image";
     img.src = images[Math.floor(Math.random() * images.length)];
@@ -63,10 +54,9 @@ function createFallingItem() {
 
   el.style.left = Math.random() * 90 + "vw";
   el.style.animationDuration = duration + "s";
-  el.style.transform += `
-    scale(${scale})
-    translateZ(${depth * 300}px)
-  `;
+  el.style.transform += ` scale(${scale})`;
+  el.style.opacity = 0.5 + depth * 0.5;
+  el.style.filter = `blur(${(1 - depth) * 1.2}px)`;
 
   document.body.appendChild(el);
   setTimeout(() => el.remove(), duration * 1000);
@@ -78,20 +68,12 @@ function spawnSpecial() {
 
   const el = document.createElement("div");
   el.className = "fall";
+  el.style.left = "50vw";
+  el.style.animationDuration = "18s";
 
   const t = document.createElement("div");
   t.className = "text special";
   t.innerText = specialMessage;
-
-  el.style.left = "50vw";
-  el.style.animationDuration = "20s";
-  el.style.transform = `
-  rotateY(32deg)
-  rotateX(18deg)
-  scale(${scale})
-  translateZ(${depth * 300}px)
-`;
-
 
   el.appendChild(t);
   document.body.appendChild(el);
@@ -104,10 +86,11 @@ function createMeteor() {
   setTimeout(() => m.remove(), 1600);
 }
 
-setInterval(createFallingItem, 320);
+setInterval(createFallingItem, 360);
 setInterval(createMeteor, 6000);
 setTimeout(spawnSpecial, 45000);
 
+/* MUSIC */
 const music = document.getElementById("music");
 const hint = document.getElementById("music-hint");
 
