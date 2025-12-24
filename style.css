@@ -12,78 +12,59 @@ body {
   perspective: 900px;
 }
 
-/* ===== LOVE OVERLAY ===== */
-#love-overlay {
+/* ===== CAMERA DRIFT (NHẸ HƠN) ===== */
+body::before {
+  content: "";
   position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
+  inset: -15%;
+  background: radial-gradient(circle at left, #050b1f, #000 75%);
+  z-index: -1;
+  animation: cameraPan 40s ease-in-out infinite alternate;
 }
 
-.love-box {
-  text-align: center;
-  color: #7dd3ff;
-}
-
-.love-box h1 {
-  font-size: clamp(26px, 6vw, 42px);
-  margin-bottom: 20px;
-}
-
-.buttons button {
-  margin: 0 10px;
-  padding: 12px 22px;
-  font-size: 16px;
-  border: none;
-  border-radius: 24px;
-  cursor: pointer;
-  background: linear-gradient(90deg, #4fc3ff, #1e90ff);
-  color: #fff;
-}
-
-#no-text {
-  margin-top: 15px;
-  opacity: 0;
-  transition: opacity .4s;
+@keyframes cameraPan {
+  from { transform: translateX(-10px); }
+  to   { transform: translateX(10px); }
 }
 
 /* ===== FALL ===== */
 .fall {
+  --scale: 1;
+
   position: absolute;
-  top: -160px;
+  top: -180px;
   pointer-events: none;
-  will-change: transform, top, opacity;
   transform-style: preserve-3d;
 
   transform:
-    rotateY(-26deg)
+    rotateY(-22deg)
     rotateX(14deg)
-    rotateZ(-5deg);
+    rotateZ(-5deg)
+    scale(var(--scale));
 
   animation: fallDown linear forwards;
 }
 
 @keyframes fallDown {
-  from { top: -160px; opacity: 0; }
+  from { top: -180px; opacity: 0; }
   to   { top: 120vh; opacity: 1; }
 }
 
 /* ===== TEXT ===== */
 .text {
-  font-size: clamp(18px, 4vw, 30px);
+  font-size: clamp(18px, 4.5vw, 30px);
   font-weight: 700;
   white-space: nowrap;
 
-  background: linear-gradient(90deg, #fff, #7dd3ff, #fff);
+  background: linear-gradient(90deg, #ffffff, #7dd3ff, #ffffff);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: glowMove 5s ease infinite;
+  animation: glowMove 6s ease infinite;
 
-  text-shadow: 0 0 16px rgba(120,220,255,.6);
+  text-shadow:
+    -6px 4px 18px rgba(0,120,255,.4),
+    0 0 14px rgba(180,240,255,.6);
 }
 
 @keyframes glowMove {
@@ -92,34 +73,56 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* ===== SPECIAL ===== */
-.special {
-  font-size: clamp(28px, 6vw, 46px);
-  font-weight: 800;
-}
-
 /* ===== IMAGE ===== */
 .image {
   width: clamp(90px, 22vw, 140px);
   height: clamp(90px, 22vw, 140px);
   border-radius: 18px;
   object-fit: cover;
-  box-shadow: 0 0 24px rgba(0,160,255,.5);
+  box-shadow:
+    0 0 18px rgba(0,180,255,.45),
+    0 0 36px rgba(0,120,255,.3);
 }
 
 /* ===== STICKER ===== */
 .sticker {
   font-size: clamp(22px, 6vw, 32px);
+  filter: drop-shadow(0 0 10px rgba(0,180,255,.6));
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+}
+
+/* ===== METEOR (ÍT HƠN) ===== */
+.meteor {
+  position: fixed;
+  width: 2px;
+  height: 110px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(120,220,255,1)
+  );
+  filter: drop-shadow(0 0 8px rgba(120,220,255,.7));
+  animation: meteorFall 1.4s linear forwards;
+}
+
+@keyframes meteorFall {
+  from { top: -30vh; left: 60vw; opacity: 1; }
+  to   { top: 120vh; left: 60vw; opacity: 0; }
 }
 
 /* ===== MUSIC HINT ===== */
 #music-hint {
   position: fixed;
-  bottom: 18px;
+  bottom: 16px;
   width: 100%;
   text-align: center;
   color: #7dd3ff;
-  font-size: 14px;
+  font-size: 13px;
   opacity: .8;
 }
 
@@ -130,7 +133,7 @@ body {
   height: 2px;
   background: white;
   border-radius: 50%;
-  opacity: .6;
+  opacity: .8;
   animation: twinkle 3s infinite ease-in-out;
   z-index: -1;
 }
