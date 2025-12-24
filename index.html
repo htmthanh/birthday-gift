@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>Happy Birthday ✨</title>
+  <title>Happy Birthday Anh Iuuuu✨</title>
   <style>
     * {
       margin: 0;
@@ -12,49 +12,23 @@
     }
 
     body {
-      background: radial-gradient(circle at top, #050b1f, #000000 70%);
+      background: radial-gradient(circle at top, #050b1f, #000 75%);
       height: 100vh;
       overflow: hidden;
       cursor: pointer;
     }
 
-    /* ✨ GALAXY TEXT */
+    /* ===== FALLING ITEMS ===== */
     .fall {
       position: absolute;
-      top: -100px;
+      top: -120px;
       pointer-events: none;
       animation: fall linear forwards;
     }
 
-    .text {
-      font-size: 22px;
-      font-weight: 600;
-      white-space: nowrap;
-      background: linear-gradient(
-        90deg,
-        #6dd5ff,
-        #2193ff,
-        #00eaff,
-        #6dd5ff
-      );
-      background-size: 300% 300%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: galaxy 4s ease infinite;
-      text-shadow:
-        0 0 8px rgba(0, 180, 255, 0.6),
-        0 0 16px rgba(0, 120, 255, 0.4);
-    }
-
-    @keyframes galaxy {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
     @keyframes fall {
       from {
-        transform: translateY(-100px);
+        transform: translateY(-120px);
         opacity: 0;
       }
       to {
@@ -63,18 +37,71 @@
       }
     }
 
-    /* ⭐ STAR BACKGROUND */
+    /* ===== GALAXY TEXT ===== */
+    .text {
+      font-size: 22px;
+      font-weight: 600;
+      white-space: nowrap;
+      background: linear-gradient(
+        90deg,
+        #5edcff,
+        #1fa2ff,
+        #00f2fe,
+        #5edcff
+      );
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: galaxy 4s ease infinite;
+      text-shadow:
+        0 0 8px rgba(0,180,255,.6),
+        0 0 16px rgba(0,120,255,.4);
+    }
+
+    @keyframes galaxy {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ===== HEART ===== */
+    .heart {
+      font-size: 26px;
+      color: #3ccfff;
+      text-shadow:
+        0 0 10px rgba(60,200,255,.8),
+        0 0 20px rgba(60,200,255,.5);
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* ===== IMAGE ===== */
+    .image {
+      width: 70px;
+      height: 70px;
+      border-radius: 14px;
+      object-fit: cover;
+      box-shadow:
+        0 0 15px rgba(0,160,255,.5),
+        0 0 30px rgba(0,100,255,.3);
+    }
+
+    /* ===== STARS ===== */
     .star {
       position: absolute;
       width: 2px;
       height: 2px;
       background: white;
-      opacity: 0.8;
+      opacity: .8;
       animation: twinkle 3s infinite ease-in-out;
     }
 
     @keyframes twinkle {
-      0%, 100% { opacity: 0.3; }
+      0%,100% { opacity: .3; }
       50% { opacity: 1; }
     }
   </style>
@@ -83,29 +110,59 @@
 
   <!-- 🎵 MUSIC -->
   <audio id="music" loop>
-    <source src="music.mp3" type="audio/mpeg">
+    <source src="music/music.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    /* 🌌 TEXT CONTENT */
+    /* ===== CONTENT ===== */
     const messages = [
-      "HAPPY BIRTHDAY",
-      "TO MY BRO ❤️",
+      "HAPPY BIRTHDAY ANH IUUUU",
       "BEST VERSION OF YOU",
+      "STAY STRONG",
       "KEEP SHINING ✨",
-      "STRONGER EVERY YEAR",
-      "YOU ARE LEGENDARY",
-      "STAY WILD – STAY REAL"
+      "YOU ARE MY WORLD",
+      "LOVE YOU TO THE MOON AND BACK",
+      "I'LL BE ALWAYS BY YOUR SIDE",
+      "KEEP SMILING",
+      "I LOVE YOU"
     ];
 
-    /* ✨ FALLING TEXT */
-    function createText() {
+    const images = [
+      "img/img1.jpg",
+      "img/img2.jpg",
+      "img/img3.jpg",
+      "img/img4.jpg",
+      "img/img5.jpg",
+      "img/img6.jpg"
+    ];
+
+    function createFallingItem() {
       const el = document.createElement("div");
       el.className = "fall";
 
-      const text = document.createElement("div");
-      text.className = "text";
-      text.innerText = messages[Math.floor(Math.random() * messages.length)];
+      const type = Math.random();
+
+      if (type < 0.45) {
+        // TEXT
+        const t = document.createElement("div");
+        t.className = "text";
+        t.innerText = messages[Math.floor(Math.random() * messages.length)];
+        el.appendChild(t);
+
+      } else if (type < 0.7) {
+        // HEART
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.innerText = "❤";
+        el.appendChild(h);
+
+      } else {
+        // IMAGE
+        const img = document.createElement("img");
+        img.className = "image";
+        img.src = images[Math.floor(Math.random() * images.length)];
+        el.appendChild(img);
+      }
 
       const duration = Math.random() * 6 + 6;
       const size = Math.random() * 0.6 + 0.8;
@@ -114,16 +171,14 @@
       el.style.animationDuration = duration + "s";
       el.style.transform = `scale(${size})`;
 
-      el.appendChild(text);
       document.body.appendChild(el);
-
       setTimeout(() => el.remove(), duration * 1000);
     }
 
-    setInterval(createText, 450);
+    setInterval(createFallingItem, 420);
 
     /* ⭐ STARS */
-    for (let i = 0; i < 120; i++) {
+    for (let i = 0; i < 140; i++) {
       const star = document.createElement("div");
       star.className = "star";
       star.style.left = Math.random() * 100 + "vw";
@@ -132,7 +187,7 @@
       document.body.appendChild(star);
     }
 
-    /* 🎵 CLICK TO PLAY */
+    /* 🎵 CLICK TO PLAY MUSIC */
     const music = document.getElementById("music");
     document.body.addEventListener("click", () => {
       music.play();
