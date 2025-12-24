@@ -1,48 +1,78 @@
 const isMobile = window.innerWidth < 768;
+const music = document.getElementById("music");
 
+let started = false;
+
+/* ===== LOVE OPTION ===== */
+const overlay = document.getElementById("love-overlay");
+const btnYes = document.getElementById("btn-yes");
+const btnNo = document.getElementById("btn-no");
+const noText = document.getElementById("no-text");
+
+btnYes.onclick = startExperience;
+
+btnNo.onclick = () => {
+  noText.style.opacity = 1;
+  setTimeout(startExperience, 1400);
+};
+
+function startExperience() {
+  if (started) return;
+  started = true;
+
+  overlay.style.display = "none";
+  music.play();
+
+  initStars();
+  startFalling();
+}
+
+/* ===== CONTENT ===== */
 const birthdayText = "HAPPY BIRTHDAY ANH IUUUU 🎂💙";
 
 const messages = [
   birthdayText, birthdayText, birthdayText,
   "YOU ARE BRILLIANT ✨",
-  "BELIEVE IN YOURSELF 💫",
-  "MY HEART IS ALWAYS YOURS 💙",
+  "YOU ARE MY FAVORITE PERSON ✨",
+  "MY HEART IS ALWAYS YOURS 💫",
   "LOVE YOU TO THE MOON AND BACK 🌙",
+  "WITH YOU, EVERYTHING FEELS RIGHT",
   "YOU MAKE MY WORLD BRIGHTER ⭐",
   "FOREVER STARTS WITH YOU 💍",
-  "I'M SO PROUD OF YOU 🔥"
+  "MY SAFE PLACE, MY LOVE 💙",
+  "I'M SO PROUD OF YOU 🔥",
+  "KEEP SMILING 💙",
+  "BELIEVE IN YOURSELF ⭐",
+  "EVERYTHING WILL BE OKAY 🌙"
+
 ];
 
-const specialMessage = "YOU ARE MY FOREVER 💙";
+const specialMessage = "BEST WISHES FOR YOU ON YOUR BIRTHDAY 💙";
 let specialShown = false;
 
-const stickers = ["💙","✨","🌙","⭐","🪐","💫"];
-
+const stickers = ["💙","✨","🌙","⭐","💫"];
 const images = [
-  "img/img1.jpg",
-  "img/img2.jpg",
-  "img/img3.jpg",
-  "img/img4.jpg",
-  "img/img5.jpg",
-  "img/img6.jpg"
+  "img/img1.jpg","img/img2.jpg","img/img3.jpg",
+  "img/img4.jpg","img/img5.jpg","img/img6.jpg"
 ];
 
+/* ===== FALLING ===== */
 function createFallingItem() {
   const el = document.createElement("div");
   el.className = "fall";
 
   const depth = Math.random();
-  const scale = (isMobile ? 0.55 : 0.7) + depth * 0.9;
-  const duration = 7 + (1 - depth) * (isMobile ? 6 : 9);
+  const scale = (isMobile ? 0.55 : 0.75) + depth * 0.7;
+  const duration = 7 + (1 - depth) * 6;
 
   const type = Math.random();
 
-  if (type < 0.45) {
+  if (type < 0.5) {
     const t = document.createElement("div");
     t.className = "text";
     t.innerText = messages[Math.floor(Math.random() * messages.length)];
     el.appendChild(t);
-  } else if (type < 0.65) {
+  } else if (type < 0.7) {
     const s = document.createElement("div");
     s.className = "sticker";
     s.innerText = stickers[Math.floor(Math.random() * stickers.length)];
@@ -57,10 +87,6 @@ function createFallingItem() {
   el.style.left = Math.random() * 90 + "vw";
   el.style.animationDuration = duration + "s";
   el.style.transform += ` scale(${scale})`;
-  el.style.opacity = 0.5 + depth * 0.5;
-
-  const blur = isMobile ? (1 - depth) * 0.4 : (1 - depth) * 1.2;
-  el.style.filter = `blur(${blur}px)`;
 
   document.body.appendChild(el);
   setTimeout(() => el.remove(), duration * 1000);
@@ -83,35 +109,20 @@ function spawnSpecial() {
   document.body.appendChild(el);
 }
 
-function createMeteor() {
-  if (isMobile && Math.random() > 0.6) return;
-  const m = document.createElement("div");
-  m.className = "meteor";
-  document.body.appendChild(m);
-  setTimeout(() => m.remove(), 1600);
+function startFalling() {
+  setInterval(createFallingItem, isMobile ? 700 : 380);
+  setTimeout(spawnSpecial, 45000);
 }
 
-setInterval(createFallingItem, isMobile ? 650 : 360);
-setInterval(createMeteor, 6000);
-setTimeout(spawnSpecial, 45000);
-
-/* MUSIC */
-const music = document.getElementById("music");
-const hint = document.getElementById("music-hint");
-
-document.body.addEventListener("click", () => {
-  music.play();
-  if (hint) hint.style.display = "none";
-}, { once: true });
-
 /* ===== STARS ===== */
-const STAR_COUNT = isMobile ? 70 : 140;
-
-for (let i = 0; i < STAR_COUNT; i++) {
-  const star = document.createElement("div");
-  star.className = "star";
-  star.style.left = Math.random() * 100 + "vw";
-  star.style.top = Math.random() * 100 + "vh";
-  star.style.animationDelay = Math.random() * 3 + "s";
-  document.body.appendChild(star);
+function initStars() {
+  const STAR_COUNT = isMobile ? 60 : 120;
+  for (let i = 0; i < STAR_COUNT; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+    star.style.left = Math.random() * 100 + "vw";
+    star.style.top = Math.random() * 100 + "vh";
+    star.style.animationDelay = Math.random() * 3 + "s";
+    document.body.appendChild(star);
+  }
 }
