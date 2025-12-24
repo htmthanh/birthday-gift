@@ -107,5 +107,5 @@ function createStars() {
 /* ===== START ===== */
 function startEffect() {
   createStars();
-  setInterval(createFallingItem, isMobile ? 700 : 420);
+  setInterval(createFallingItem, isMobile ? 520 : 300);
 }
