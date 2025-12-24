@@ -1,4 +1,4 @@
-/* ===== TEXT ===== */
+/* ===== TEXT CONTENT ===== */
 const messages = [
   "HAPPY BIRTHDAY ANH IUUUU 💙",
   "YOU ARE MY FAVORITE PERSON ✨",
@@ -24,24 +24,28 @@ const images = [
   "img/img6.jpg"
 ];
 
+/* ===== CREATE FALLING ITEM ===== */
 function createFallingItem() {
   const el = document.createElement("div");
   el.className = "fall";
 
   const type = Math.random();
 
-  if (type < 0.5) {
+  // 📉 Giảm chữ
+  if (type < 0.35) {
     const t = document.createElement("div");
     t.className = "text";
     t.innerText = messages[Math.floor(Math.random() * messages.length)];
     el.appendChild(t);
 
-  } else if (type < 0.75) {
+  // ⭐ Sticker vừa
+  } else if (type < 0.55) {
     const s = document.createElement("div");
     s.className = "sticker";
     s.innerText = stickers[Math.floor(Math.random() * stickers.length)];
     el.appendChild(s);
 
+  // 🖼 Hình to & nổi
   } else {
     const img = document.createElement("img");
     img.className = "image";
@@ -49,21 +53,22 @@ function createFallingItem() {
     el.appendChild(img);
   }
 
-  const duration = Math.random() * 5 + 9; // 9–14s
-  const size = Math.random() * 0.5 + 0.9;
+  /* 🎥 Cinematic movement */
+  const duration = Math.random() * 6 + 11; // 11–17s
+  const size = Math.random() * 0.4 + 0.9;
 
-  el.style.left = Math.random() * 95 + "vw";
+  el.style.left = Math.random() * 90 + "vw";
   el.style.animationDuration = duration + "s";
-  el.style.transform = `scale(${size})`;
+  el.style.transform += ` scale(${size})`;
 
   document.body.appendChild(el);
   setTimeout(() => el.remove(), duration * 1000);
 }
 
-/* 🔥 DÀY HƠN */
-setInterval(createFallingItem, 240);
+/* ⚖️ Mật độ vừa – dễ đọc */
+setInterval(createFallingItem, 360);
 
-/* ⭐ STARS */
+/* ⭐ STAR BACKGROUND */
 for (let i = 0; i < 180; i++) {
   const star = document.createElement("div");
   star.className = "star";
@@ -75,6 +80,9 @@ for (let i = 0; i < 180; i++) {
 
 /* 🎵 CLICK TO PLAY MUSIC */
 const music = document.getElementById("music");
+const hint = document.getElementById("music-hint");
+
 document.body.addEventListener("click", () => {
   music.play();
+  if (hint) hint.style.display = "none";
 }, { once: true });
