@@ -30,27 +30,25 @@ body::before {
   top: -200px;
   pointer-events: none;
   transform-style: preserve-3d;
+
+  transform:
+    rotateY(32deg)
+    rotateX(18deg);
+
   animation: fallDown linear forwards;
 }
 
 @keyframes fallDown {
   from {
-    transform:
-      translateY(-200px)
-      translateZ(-600px)
-      rotateY(32deg)
-      rotateX(18deg);
+    top: -200px;
     opacity: 0;
   }
   to {
-    transform:
-      translateY(120vh)
-      translateZ(260px)
-      rotateY(32deg)
-      rotateX(0deg);
+    top: 120vh;
     opacity: 1;
   }
 }
+
 
 .text {
   font-size: clamp(20px, 4vw, 30px);

@@ -85,7 +85,13 @@ function spawnSpecial() {
 
   el.style.left = "50vw";
   el.style.animationDuration = "20s";
-  el.style.transform += "scale(1.3) translateZ(350px)";
+  el.style.transform = `
+  rotateY(32deg)
+  rotateX(18deg)
+  scale(${scale})
+  translateZ(${depth * 300}px)
+`;
+
 
   el.appendChild(t);
   document.body.appendChild(el);
