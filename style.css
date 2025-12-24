@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #060c24, #000 75%);
+  height: 100vh;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* ===== FALL ===== */
+.fall {
+  position: absolute;
+  top: -150px;
+  pointer-events: none;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(-150px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(115vh);
+    opacity: 1;
+  }
+}
+
+/* ===== GALAXY TEXT ===== */
+.text {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  background: linear-gradient(
+    90deg,
+    #7dd3ff,
+    #3aa0ff,
+    #00f2fe,
+    #7dd3ff
+  );
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: galaxy 5s ease infinite;
+  text-shadow:
+    0 0 12px rgba(0,180,255,.7),
+    0 0 30px rgba(0,120,255,.5);
+}
+
+@keyframes galaxy {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== STICKER ===== */
+.sticker {
+  font-size: 30px;
+  filter: drop-shadow(0 0 10px rgba(0,180,255,.8));
+  animation: pulse 1.6s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+}
+
+/* ===== IMAGE ===== */
+.image {
+  width: 100px;
+  height: 100px;
+  border-radius: 18px;
+  object-fit: cover;
+  box-shadow:
+    0 0 25px rgba(0,180,255,.6),
+    0 0 45px rgba(0,120,255,.4);
+}
+
+/* ===== STARS ===== */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  opacity: .8;
+  animation: twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%,100% { opacity: .3; }
+  50% { opacity: 1; }
+}
