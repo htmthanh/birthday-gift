@@ -1,3 +1,5 @@
+const isMobile = window.innerWidth < 768;
+
 const birthdayText = "HAPPY BIRTHDAY ANH IUUUU 🎂💙";
 
 const messages = [
@@ -29,9 +31,9 @@ function createFallingItem() {
   const el = document.createElement("div");
   el.className = "fall";
 
-  const depth = Math.random(); // 0 xa – 1 gần
-  const scale = 0.7 + depth * 0.9;
-  const duration = 7 + (1 - depth) * 8;
+  const depth = Math.random();
+  const scale = (isMobile ? 0.55 : 0.7) + depth * 0.9;
+  const duration = 7 + (1 - depth) * (isMobile ? 6 : 9);
 
   const type = Math.random();
 
@@ -56,7 +58,9 @@ function createFallingItem() {
   el.style.animationDuration = duration + "s";
   el.style.transform += ` scale(${scale})`;
   el.style.opacity = 0.5 + depth * 0.5;
-  el.style.filter = `blur(${(1 - depth) * 1.2}px)`;
+
+  const blur = isMobile ? (1 - depth) * 0.4 : (1 - depth) * 1.2;
+  el.style.filter = `blur(${blur}px)`;
 
   document.body.appendChild(el);
   setTimeout(() => el.remove(), duration * 1000);
@@ -80,13 +84,14 @@ function spawnSpecial() {
 }
 
 function createMeteor() {
+  if (isMobile && Math.random() > 0.6) return;
   const m = document.createElement("div");
   m.className = "meteor";
   document.body.appendChild(m);
   setTimeout(() => m.remove(), 1600);
 }
 
-setInterval(createFallingItem, 360);
+setInterval(createFallingItem, isMobile ? 650 : 360);
 setInterval(createMeteor, 6000);
 setTimeout(spawnSpecial, 45000);
 
@@ -100,7 +105,7 @@ document.body.addEventListener("click", () => {
 }, { once: true });
 
 /* ===== STARS ===== */
-const STAR_COUNT = window.innerWidth < 600 ? 80 : 140;
+const STAR_COUNT = isMobile ? 70 : 140;
 
 for (let i = 0; i < STAR_COUNT; i++) {
   const star = document.createElement("div");
