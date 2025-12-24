@@ -1,7 +1,12 @@
-/* ===== TEXT CONTENT ===== */
+/* ===== TEXT ===== */
+const birthdayText = "HAPPY BIRTHDAY ANH IUUUU 🎂💙";
+
 const messages = [
-  "HAPPY BIRTHDAY ANH IUUUU 💙",
-  "YOU ARE MY FAVORITE PERSON ✨",
+  birthdayText,
+  birthdayText,
+  birthdayText,
+  "YOU ARE BRILLIANT ✨",
+  "BELIEVE IN YOURSELF 💫",
   "MY HEART IS ALWAYS YOURS 💫",
   "LOVE YOU TO THE MOON AND BACK 🌙",
   "WITH YOU, EVERYTHING FEELS RIGHT",
@@ -11,65 +16,61 @@ const messages = [
   "I'M SO PROUD OF YOU 🔥"
 ];
 
-/* ===== STICKERS ===== */
-const stickers = ["💙","✨","🌙","⭐","🪐","🔥","💫"];
+const specialMessage = "YOU ARE MY FOREVER 💙";
+let specialShown = false;
 
-/* ===== IMAGES ===== */
-const images = [
-  "img/img1.jpg",
-  "img/img2.jpg",
-  "img/img3.jpg",
-  "img/img4.jpg",
-  "img/img5.jpg",
-  "img/img6.jpg"
-];
-
-/* ===== CREATE FALLING ITEM ===== */
-function createFallingItem() {
+function createTunnelText() {
   const el = document.createElement("div");
   el.className = "fall";
 
-  const type = Math.random();
+  const depth = Math.random(); // 0 xa – 1 gần
+  const scale = 0.6 + depth * 1.2;
+  const duration = 6 + (1 - depth) * 9;
 
-  // 📉 Giảm chữ
-  if (type < 0.35) {
-    const t = document.createElement("div");
-    t.className = "text";
-    t.innerText = messages[Math.floor(Math.random() * messages.length)];
-    el.appendChild(t);
+  const t = document.createElement("div");
+  t.className = "text";
+  t.innerText = messages[Math.floor(Math.random() * messages.length)];
 
-  // ⭐ Sticker vừa
-  } else if (type < 0.55) {
-    const s = document.createElement("div");
-    s.className = "sticker";
-    s.innerText = stickers[Math.floor(Math.random() * stickers.length)];
-    el.appendChild(s);
-
-  // 🖼 Hình to & nổi
-  } else {
-    const img = document.createElement("img");
-    img.className = "image";
-    img.src = images[Math.floor(Math.random() * images.length)];
-    el.appendChild(img);
-  }
-
-  /* 🎥 Cinematic movement */
-  const duration = Math.random() * 6 + 11; // 11–17s
-  const size = Math.random() * 0.4 + 0.9;
-
-  el.style.left = Math.random() * 90 + "vw";
   el.style.animationDuration = duration + "s";
-  el.style.transform += ` scale(${size})`;
+  el.style.transform += `
+    scale(${scale})
+    translateZ(${depth * 300}px)
+  `;
 
+  el.appendChild(t);
   document.body.appendChild(el);
+
   setTimeout(() => el.remove(), duration * 1000);
 }
 
-/* ⚖️ Mật độ vừa – dễ đọc */
-setInterval(createFallingItem, 360);
+function spawnSpecial() {
+  if (specialShown) return;
+  specialShown = true;
 
-/* ⭐ STAR BACKGROUND */
-for (let i = 0; i < 180; i++) {
+  const el = document.createElement("div");
+  el.className = "fall";
+
+  const t = document.createElement("div");
+  t.className = "text special";
+  t.innerText = specialMessage;
+
+  el.style.animationDuration = "18s";
+  el.style.transform += " scale(1.3) translateZ(350px)";
+
+  el.appendChild(t);
+  document.body.appendChild(el);
+
+  setTimeout(() => el.remove(), 18000);
+}
+
+function createMeteor() {
+  const m = document.createElement("div");
+  m.className = "meteor";
+  document.body.appendChild(m);
+  setTimeout(() => m.remove(), 1500);
+}
+
+for (let i = 0; i < 160; i++) {
   const star = document.createElement("div");
   star.className = "star";
   star.style.left = Math.random() * 100 + "vw";
@@ -78,7 +79,10 @@ for (let i = 0; i < 180; i++) {
   document.body.appendChild(star);
 }
 
-/* 🎵 CLICK TO PLAY MUSIC */
+setInterval(createTunnelText, 300);
+setInterval(createMeteor, 5500);
+setTimeout(spawnSpecial, 45000);
+
 const music = document.getElementById("music");
 const hint = document.getElementById("music-hint");
 

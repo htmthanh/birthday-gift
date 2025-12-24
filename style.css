@@ -6,129 +6,166 @@
 }
 
 body {
-  background: radial-gradient(circle at top, #060c24, #000 75%);
+  background: radial-gradient(circle at left, #050b1f, #000 75%);
   height: 100vh;
   overflow: hidden;
   cursor: pointer;
 
-  /* 👇 tạo góc nhìn nghiêng 3D */
-  perspective: 900px;
-}
-
-/* ===== FALLING ITEM ===== */
-.fall {
-  position: absolute;
-  top: -150px;
-  pointer-events: none;
-  animation: fall linear forwards;
+  perspective: 1200px;
   transform-style: preserve-3d;
 }
 
-/* ✨ BAY NGHIÊNG 3D */
-@keyframes fall {
+body::before {
+  content: "";
+  position: fixed;
+  inset: -15%;
+  pointer-events: none;
+  animation: cameraPan 26s ease-in-out infinite alternate;
+}
+
+@keyframes cameraPan {
+  from { transform: translateX(-25px); }
+  to   { transform: translateX(25px); }
+}
+
+.fall {
+  position: absolute;
+  top: 50%;
+  left: -35vw;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  animation: tunnelMove linear forwards;
+}
+
+@keyframes tunnelMove {
   from {
     transform:
-      translateY(-150px)
-      translateX(-40px)
-      rotateX(35deg)
-      rotateZ(-8deg);
+      translate3d(0, -50%, -700px)
+      rotateY(38deg)
+      rotateX(8deg)
+      skewY(-6deg);
     opacity: 0;
   }
+
   to {
     transform:
-      translateY(115vh)
-      translateX(40px)
+      translate3d(170vw, -50%, 250px)
+      rotateY(38deg)
       rotateX(0deg)
-      rotateZ(8deg);
+      skewY(-6deg);
     opacity: 1;
   }
 }
 
-/* ===== GALAXY TEXT ===== */
 .text {
-  font-size: 26px;
-  font-weight: 650;
-  letter-spacing: 0.8px;
+  font-size: clamp(20px, 4vw, 30px);
+  font-weight: 700;
   white-space: nowrap;
 
   background: linear-gradient(
     90deg,
+    #ffffff,
     #7dd3ff,
-    #3aa0ff,
-    #00f2fe,
-    #7dd3ff
+    #ffffff
   );
-  background-size: 400% 400%;
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: galaxy 5s ease infinite;
+  animation: glowMove 5s ease infinite;
 
   text-shadow:
-    0 0 12px rgba(0,180,255,.7),
-    0 0 30px rgba(0,120,255,.5);
-
-  transform-style: preserve-3d;
+    0 0 12px rgba(255,255,255,.8),
+    0 0 32px rgba(0,160,255,.6);
 }
 
-@keyframes galaxy {
+@keyframes glowMove {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* ===== STICKER ===== */
-.sticker {
-  font-size: 30px;
-  filter: drop-shadow(0 0 12px rgba(0,180,255,.8));
-  animation: pulse 1.6s infinite ease-in-out;
-  transform-style: preserve-3d;
+.special {
+  font-size: clamp(32px, 6vw, 46px);
+  font-weight: 800;
+  letter-spacing: 2px;
+  animation: specialGlow 3s infinite alternate;
 }
 
-@keyframes pulse {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.25); }
+@keyframes specialGlow {
+  from {
+    text-shadow:
+      0 0 25px rgba(120,220,255,.8),
+      0 0 60px rgba(0,180,255,.6);
+  }
+  to {
+    text-shadow:
+      0 0 40px rgba(180,240,255,1),
+      0 0 90px rgba(0,200,255,.9);
+  }
 }
 
-/* ===== IMAGE ===== */
-.image {
-  width: 140px;
+.meteor {
+  position: fixed;
+  width: 3px;
   height: 140px;
-  border-radius: 20px;
-  object-fit: cover;
-
-  box-shadow:
-    0 0 35px rgba(0,180,255,.6),
-    0 0 65px rgba(0,120,255,.4);
-
-  transform-style: preserve-3d;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(120,220,255,1)
+  );
+  filter: drop-shadow(0 0 12px rgba(120,220,255,.9));
+  animation: meteorMove 1.5s linear forwards;
 }
 
-/* ===== STARS ===== */
+@keyframes meteorMove {
+  from {
+    transform:
+      translate3d(120vw, -20vh, -300px)
+      rotate(45deg);
+    opacity: 1;
+  }
+  to {
+    transform:
+      translate3d(-40vw, 120vh, 200px)
+      rotate(45deg);
+    opacity: 0;
+  }
+}
+
 .star {
   position: absolute;
   width: 2px;
   height: 2px;
   background: white;
-  opacity: 0.8;
+  opacity: .8;
   animation: twinkle 3s infinite ease-in-out;
 }
 
 @keyframes twinkle {
-  0%,100% { opacity: 0.3; }
+  0%,100% { opacity: .3; }
   50% { opacity: 1; }
 }
 
-/* ===== MUSIC HINT ===== */
 #music-hint {
   position: fixed;
-  bottom: 24px;
+  bottom: 22px;
+  left: 0;
   width: 100%;
+
   text-align: center;
   font-size: 14px;
   letter-spacing: 1px;
-  color: rgba(180, 220, 255, 0.8);
-  text-shadow: 0 0 10px rgba(0,180,255,0.6);
+
+  color: rgba(200, 235, 255, 0.95);
+  background: transparent;
+
+  text-shadow:
+    0 0 12px rgba(0,180,255,0.9),
+    0 0 24px rgba(0,120,255,0.6);
+
+  z-index: 9999; 
   pointer-events: none;
+
   animation: hintFade 2.5s infinite alternate;
 }
 
@@ -136,3 +173,4 @@ body {
   from { opacity: 0.4; }
   to   { opacity: 1; }
 }
+
